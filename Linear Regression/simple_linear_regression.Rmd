@@ -1,0 +1,52 @@
+---
+title: "Linear Regression in R"
+author: "Eduardo Carrasco"
+date: "1/4/2017"
+output: html_document
+runtime: shiny
+---
+
+```{r libraries used}
+library(MASS)
+library(ISLR)
+```
+
+```{r }
+fix(Boston)
+names(Boston)
+```
+
+## Starting Linear Regression
+
+```{r Linear Regression 101}
+cat('\014')
+attach(Boston)
+lm.fit = lm(medv~lstat, data=Boston)
+
+lm.fit
+
+summary(lm.fit)
+
+names(lm.fit)
+
+
+```
+
+```{r Quality of the Regression}
+coef(lm.fit)
+
+confint(lm.fit)
+
+predict(lm.fit, data.frame(lstat=c(5, 10, 15)), interval = "confidence")
+
+predict(lm.fit, data.frame(lstat=c(5, 10, 15)), interval = "prediction")
+```
+
+```{r Quality of the Regression}
+plot(lstat, medv)
+abline(lm.fit) # Plot with Regression Line
+
+abline(lm.fit, lwd=3) ## Make line thicker
+abline(lm.fit, lwd=3, col="red") ## Make the line thicker and red!
+
+```
