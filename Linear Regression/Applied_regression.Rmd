@@ -1,0 +1,34 @@
+---
+title: "applied_regression"
+author: "Eduardo Carrasco"
+date: "1/9/2017"
+output: html_document
+---
+
+```{r }
+library(car)
+```
+## Exercise 11
+```{r cars}
+set.seed(2000)
+x=rnorm(100)
+y=2*x+rnorm(100)
+```
+## Regression
+```{r}
+('/014')
+lm.fit.no.intercept = lm(y~x+0)
+summary(lm.fit.no.intercept)
+
+lm.fit.with.intercept = lm(y~x)
+summary(lm.fit.with.intercept)
+
+#comparision
+# No significant difference between the two models
+```
+## Comparisions
+```{r}
+anova(lm.fit.no.intercept, lm.fit.with.intercept)
+
+t.test(y~x)
+```

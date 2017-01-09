@@ -1,0 +1,63 @@
+---
+title: "Multiple Linear Regression"
+author: "Eduardo Carrasco"
+date: "1/6/2017"
+output: html_document
+---
+
+## Libraries
+
+```{r Libraries}
+library(MASS)
+library(ISLR)
+
+fix(Boston)
+```
+
+## Mutiple Regression
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+lm.fit = lm(medv~lstat+age, data=Boston)
+summary(lm.fit)
+
+library(car)
+vif(lm.fit)
+
+lm.fit.1 = lm(medv~.-age, data = Boston)
+summary(lm.fit.1)
+
+```
+
+## Non-linear Transformations of the Predictors
+
+```{r Transformations}
+lm.non.linear = lm(medv~lstat+I(lstat^2), data = Boston)
+summary(lm.non.linear)
+```
+
+## Anova Comparision
+```{r Model Comparision}
+lm.fit = lm(medv~lstat, data = Boston)
+
+anova(lm.fit, lm.non.linear)
+
+par(mfrow=c(2,2))
+plot(lm.non.linear)
+
+lm.fit.3 = lm(medv~poly(lstat,5), data = Boston)
+summary(lm.fit.3)
+
+```
+## Qualitative Predictors
+```{r Carseats}
+fix(Carseats)
+names(Carseats)
+
+```
+
+```{r}
+lm.fit = lm(Sales~.+Income:Advertising + Price:Age, data = Carseats)
+summary(lm.fit)
+```
