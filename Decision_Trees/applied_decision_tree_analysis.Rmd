@@ -1,0 +1,82 @@
+---
+  title: "Decision Trees and Random Forest"
+author: "Eduardo Carrasco"
+date: "August 11, 2016"
+output: html_document
+---
+
+
+
+
+```{r setup, include=FALSE}
+setwd("/Users/lalo/CodingComplication/DataScienceProjects/Statistical_Learning_In_R/Decision_Trees")
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r Library}
+library(randomForest)
+library(MASS)
+library(tree)
+library(ISLR)
+```
+
+## Including Plots
+```{r Creat a Random Forest n = 25}
+bag.boston=randomForest(medv~.,data=Boston,subset=train,mtry=13,importance=TRUE)
+bag.boston
+yhat.bag = predict(bag.boston,newdata=Boston[-train,])
+plot(yhat.bag, boston.test)
+abline(0,1)
+mean((yhat.bag-boston.test)^2)
+bag.boston=randomForest(medv~.,data=Boston,subset=train,mtry=13,ntree=25)
+yhat.bag = predict(bag.boston,newdata=Boston[-train,])
+mean((yhat.bag-boston.test)^2)
+set.seed(1)
+rf.boston=randomForest(medv~.,data=Boston,subset=train,mtry=6,importance=TRUE)
+yhat.rf = predict(rf.boston,newdata=Boston[-train,])
+mean((yhat.rf-boston.test)^2)
+importance(rf.boston)
+varImpPlot(rf.boston)
+```
+
+```{r Creat a Random Forest n = 250}
+bag.boston=randomForest(medv~.,data=Boston,subset=train,mtry=13,importance=TRUE)
+bag.boston
+yhat.bag = predict(bag.boston,newdata=Boston[-train,])
+plot(yhat.bag, boston.test)
+abline(0,1)
+mean((yhat.bag-boston.test)^2)
+bag.boston=randomForest(medv~.,data=Boston,subset=train,mtry=13,ntree=250)
+yhat.bag = predict(bag.boston,newdata=Boston[-train,])
+mean((yhat.bag-boston.test)^2)
+set.seed(1)
+rf.boston=randomForest(medv~.,data=Boston,subset=train,mtry=6,importance=TRUE)
+yhat.rf = predict(rf.boston,newdata=Boston[-train,])
+mean((yhat.rf-boston.test)^2)
+importance(rf.boston)
+varImpPlot(rf.boston)
+```
+
+```{r Creat a Random Forest n = 2500}
+bag.boston=randomForest(medv~.,data=Boston,subset=train,mtry=13,importance=TRUE)
+bag.boston
+yhat.bag = predict(bag.boston,newdata=Boston[-train,])
+plot(yhat.bag, boston.test)
+abline(0,1)
+mean((yhat.bag-boston.test)^2)
+bag.boston=randomForest(medv~.,data=Boston,subset=train,mtry=13,ntree=2500)
+yhat.bag = predict(bag.boston,newdata=Boston[-train,])
+mean((yhat.bag-boston.test)^2)
+set.seed(1)
+rf.boston=randomForest(medv~.,data=Boston,subset=train,mtry=6,importance=TRUE)
+yhat.rf = predict(rf.boston,newdata=Boston[-train,])
+mean((yhat.rf-boston.test)^2)
+importance(rf.boston)
+varImpPlot(rf.boston)
+```
