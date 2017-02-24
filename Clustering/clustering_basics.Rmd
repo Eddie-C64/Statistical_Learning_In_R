@@ -1,0 +1,56 @@
+---
+title: "Pricipal Component"
+author: "Eduardo Carrasco"
+date: "2/23/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+setwd("/Users/lalo/CodingComplication/DataScienceProjects/Statistical_Learning_In_R/Clustering")
+
+```
+
+## R Markdown
+
+```{r Library}
+cat('\014')
+states = row.names(USArrests)
+# All the states
+states
+# Catigory data
+names(USArrests)
+# Means of each Catogory
+apply(USArrests, 2, mean)
+# Variatin of each Catigory
+apply(USArrests, 2, var)
+
+```
+
+
+
+```{r Basics of data cleaning}
+pr.out=prcomp(USArrests, scale=TRUE)
+names(pr.out)
+pr.out$center
+pr.out$scale
+pr.out$rotation
+
+biplot(pr.out, scale=0)
+pr.out$rotation = -pr.out$rotation
+pr.out$x = -pr.out$x
+biplot(pr.out, scale = 0)
+```
+## Including Plots for Pricipal Components
+```{r}
+pr.out$sdev
+
+pr.var=pr.out$sdev^2
+pr.var
+pve = pr.var/sum(pr.var)
+
+plot(pve, xlab="Pricipal Component", ylab="Proportion of Variance Explained",ylim = c(0,1), type = 'b')
+plot(cumsum(pve), xlab = "Principal Component", ylab = "Cumulative Proportion of Variance Explained", ylim = c(0,1), type = 'b')
+```
+
+
+

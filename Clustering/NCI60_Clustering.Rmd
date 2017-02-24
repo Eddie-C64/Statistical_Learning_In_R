@@ -1,0 +1,43 @@
+---
+title: "NCI60_Data"
+author: "Eduardo Carrasco"
+date: "2/24/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+setwd("/Users/lalo/CodingComplication/DataScienceProjects/Statistical_Learning_In_R/Clustering")
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+```{r cars}
+cat("\014")
+library(ISLR)
+nci.labs = NCI60$labs
+nci.data = NCI60$data
+
+dim(nci.data)
+nci.labs[1:4]
+table(nci.labs)
+nci.labs
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure}
+pr_out = prcomp(nci.data, scale=TRUE)
+Cols=function(vec){
+  cols=rainbow(length(unique(vec)))
+  return(cols[as.numeric(as.factor(vec))])
+}
+
+par(mfrow=c(1,2))
+plot(pr_out$x[, 1:2], col=Cols(nci.labs),pch=19, xlab = "Z1", ylab = "Z2")
+
+plot(pr_out$x[, c(1,3)], col=Cols(nci.labs),pch=19, xlab = "Z1", ylab = "Z3")
+```
