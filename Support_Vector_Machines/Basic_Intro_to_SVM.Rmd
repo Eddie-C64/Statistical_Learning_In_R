@@ -1,0 +1,64 @@
+---
+title: "an_intro_support_vector_machines"
+author: "Eduardo Carrasco"
+date: "3/6/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+setwd("/Users/lalo/CodingComplication/DataScienceProjects/Statistical_Learning_In_R/Support_Vector_Machines")
+```
+
+## Basic introduction to Support Vector Machines
+
+```{r create the data}
+set.seed(1)
+x = matrix(rnorm(20*2), ncol = 2)
+y = c(rep(-1,10), rep(1,10))
+x[y==1,]=x[y==1,]+1
+plot(x, col=(3-y))
+```
+## Learn from the data, and plot the data
+```{r svm classifier, ploting}
+dat = dat.frame(x=x, y=as.factor(y))
+library(e1071)
+svmfit = svm(y~., data = dat, kernel = "linear", cost=10, scale=FALSE)
+plot(svmfit, dat)
+```
+## Summary
+```{r svm summary}
+svmfit$index
+summary(svmfit)
+svmfit2 = svm(y~., data=dat, kernel="linear", cost=0.1, scale=FALSE)
+plot(svmfit2, dat)
+svmfit2$index
+```
+## Cross Validation
+```{r tuning the models}
+set.seed(1)
+tune.out = tune(svm, y~., data=dat, kernel="linear", ranges=list(cost=c(0.001, 0.01, 0.1, 1, 5, 10, 100)))
+summary(tune.out)
+best.model = tune.out$best.model
+summary(best.model)
+```
+## Doing forecasting with the Model.
+```{r Predicting the Data with the Model}
+x.test = matrix(rnorm(20*2), ncol=2)
+y.test = sample(c(-1,1), 20, rep=TRUE)
+x.test[y.test==1,]=x.test[y.test==1,]+1
+test.data = data.frame(x=x.test, y=as.factor(y.test))
+# This is where the predictions start
+ypred = predict(best.model, testdat)
+table(predict=ypred, truth=test.data$y)
+svmfit3 = svm(y~., data = dat, kernel="linear", cost=0.1, scale=FALSE)
+ypred = predict(svmfit3, testdat)
+table(predict=ypred, truth=test.data$y)
+x[y==1,]=x[y==1,]+0.5
+plot(x, col=(y+5)/2, pch=19)
+dat = data.frame(x=x, y=as.factor(y))
+svmfit4 = svm(y~., data=dat, kernel="linear", cost=1e5)
+summary(svmfit4)
+plot(svmfit4, dat)
+svmfit5=svm(y~., data=dat, kernel="linear", cost=1)
+summary(svmfit5)
+```

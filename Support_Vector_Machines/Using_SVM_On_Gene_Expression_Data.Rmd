@@ -1,0 +1,26 @@
+---
+title: "SVM_and_Gene_Expression"
+author: "Eduardo Carrasco"
+date: "3/13/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+setwd("/Users/lalo/CodingComplication/DataScienceProjects/Statistical_Learning_In_R/Support_Vector_Machines")
+library(e1071)
+library(ROCR)
+library(ISLR)
+```
+
+```{r Setting the seeds}
+cat('\014')
+names(Khan)
+dim(Khan$xtrain)
+gene_data = data.frame(x=Khan$xtrain, y=as.factor(Khan$ytrain))
+output = svm(y~., data=gene_data, kernel="linear", cost=10)
+summary(output)
+table(output$fitted, gene_data$y)
+#
+data.test = data.frame(x=Khan$xtest, y=as.factor(Khan$ytest))
+pred.test = predict(output, newdata = data.test$y)
+```
