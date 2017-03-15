@@ -1,0 +1,26 @@
+---
+title: "Ridge_Regression_and_The_Lasso"
+author: "Eduardo Carrasco"
+date: "3/15/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+setwd("/Users/lalo/CodingComplication/DataScienceProjects/Statistical_Learning_In_R/Model_Reduction")
+library(glmnet)
+```
+
+```{r}
+cat('\014')
+# Chapter 6 Lab 2: Ridge Regression and the Lasso
+
+x=model.matrix(Salary~.,Hitters)[,-1]
+y=Hitters$Salary
+
+# Ridge Regression
+
+library(glmnet)
+grid=10^seq(10,-2,length=100)
+ridge.mod=glmnet(x,y,alpha=0,lambda=grid)
+dim(coef(ridge.mod))
+```
